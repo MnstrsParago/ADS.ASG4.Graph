@@ -1,27 +1,34 @@
 public class Main {
     public static void main(String[] args) {
+        // Create vertices
+        Vertex<String> a = new Vertex<>("A");
+        Vertex<String> b = new Vertex<>("B");
+        Vertex<String> c = new Vertex<>("C");
+        Vertex<String> d = new Vertex<>("D");
+        Vertex<String> e = new Vertex<>("E");
+
+        // Create weighted graph
         WeightedGraph<String> graph = new WeightedGraph<>();
 
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-        graph.addVertex("E");
+        // Add edges
+        graph.addEdge(a, b, 4);
+        graph.addEdge(a, c, 2);
+        graph.addEdge(b, c, 5);
+        graph.addEdge(b, d, 10);
+        graph.addEdge(c, e, 3);
+        graph.addEdge(e, d, 4);
 
-        graph.addEdge("A", "B", 4);
-        graph.addEdge("A", "C", 2);
-        graph.addEdge("B", "C", 1);
-        graph.addEdge("B", "D", 5);
-        graph.addEdge("C", "D", 8);
-        graph.addEdge("C", "E", 10);
-        graph.addEdge("D", "E", 2);
+        // Breadth First Search
+        System.out.println("Breadth First Search starting from A:");
+        Search<String> bfs = new BreadthFirstSearch<>(graph, a);
+        for (Vertex<String> vertex : bfs.getPath(d)) {
+            System.out.print(vertex + " ");
+        }
 
-        System.out.println("BFS Path from A to E:");
-        Search<String> bfs = new BreadthFirstSearch<>(graph, "A");
-        System.out.println(bfs.pathTo("E"));
-
-        System.out.println("\nDijkstra's Path from A to E:");
-        Search<String> dijkstra = new DijkstraSearch<>(graph, "A");
-        System.out.println(dijkstra.pathTo("E"));
+        System.out.println("\n\nDijkstra Search starting from A:");
+        Search<String> dijkstra = new DijkstraSearch<>(graph, a);
+        for (Vertex<String> vertex : dijkstra.getPath(d)) {
+            System.out.print(vertex + " ");
+        }
     }
 }
